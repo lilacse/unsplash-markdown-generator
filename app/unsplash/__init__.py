@@ -1,0 +1,1 @@
+from .get_photo import get_photo
