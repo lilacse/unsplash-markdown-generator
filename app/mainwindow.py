@@ -4,6 +4,7 @@ from PySide6.QtCore import Slot
 
 from app.unsplash import get_photo
 from ui import Ui_MainWindow
+from app.dialogs import SetAccessToken
 
 from PySide6.QtWidgets import QMainWindow
 
@@ -15,10 +16,11 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         self.ui.pushButton_generate.clicked.connect(self.generate)
+        self.ui.pushButton_setAccessToken.clicked.connect(self.set_access_token)
 
     @Slot()
     def generate(self):
-        access_token = self.ui.lineEdit_accessToken.text()
+        access_token = self.ui.label_accessTokenValue.text()
         url = self.ui.lineEdit_url.text()
         photo = get_photo(access_token, url)
 
@@ -36,3 +38,13 @@ class MainWindow(QMainWindow):
         )
 
         self.ui.plainTextEdit_result.setPlainText(markdown)
+
+    @Slot()
+    def set_access_token(self):
+        dialog = SetAccessToken()
+        if dialog.exec():
+            token: str = dialog.token
+            if len(token) > 0:
+                self.ui.label_accessTokenValue.setText(token)
+            else:
+                self.ui.label_accessTokenValue.setText("Not set")

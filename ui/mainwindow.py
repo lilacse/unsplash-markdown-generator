@@ -40,11 +40,18 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.lineEdit_accessToken = QLineEdit(self.centralwidget)
-        self.lineEdit_accessToken.setObjectName(u"lineEdit_accessToken")
+        self.label_accessTokenValue = QLabel(self.centralwidget)
+        self.label_accessTokenValue.setObjectName(u"label_accessTokenValue")
 
-        self.horizontalLayout.addWidget(self.lineEdit_accessToken)
+        self.horizontalLayout.addWidget(self.label_accessTokenValue)
 
+        self.pushButton_setAccessToken = QPushButton(self.centralwidget)
+        self.pushButton_setAccessToken.setObjectName(u"pushButton_setAccessToken")
+
+        self.horizontalLayout.addWidget(self.pushButton_setAccessToken)
+
+        self.horizontalLayout.setStretch(0, 5)
+        self.horizontalLayout.setStretch(1, 1)
 
         self.formLayout_2.setLayout(0, QFormLayout.FieldRole, self.horizontalLayout)
 
@@ -92,7 +99,8 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Unsplash Markdown Generator", None))
         self.label_accessToken.setText(QCoreApplication.translate("MainWindow", u"Access Token:", None))
-        self.lineEdit_accessToken.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Token", None))
+        self.label_accessTokenValue.setText(QCoreApplication.translate("MainWindow", u"Not set", None))
+        self.pushButton_setAccessToken.setText(QCoreApplication.translate("MainWindow", u"Configure", None))
         self.lable_url.setText(QCoreApplication.translate("MainWindow", u"Unsplash URL:", None))
         self.lineEdit_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://unsplash.com/photos/...", None))
         self.pushButton_generate.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
