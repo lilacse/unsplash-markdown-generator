@@ -2,6 +2,7 @@ import json
 
 from PySide6.QtCore import Slot
 
+from app.config import ConfigProvider
 from app.unsplash import get_photo
 from ui import Ui_MainWindow
 from app.dialogs import SetAccessToken
@@ -10,13 +11,18 @@ from PySide6.QtWidgets import QMainWindow
 
 
 class MainWindow(QMainWindow):
+    __config_provider: ConfigProvider = ConfigProvider()
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.__config_provider.init_config()
+        self.__set_access_token(self.__config_provider.get_token())
+
         self.ui.pushButton_generate.clicked.connect(self.generate)
-        self.ui.pushButton_setAccessToken.clicked.connect(self.set_access_token)
+        self.ui.pushButton_setAccessToken.clicked.connect(self.configure_access_token)
 
     @Slot()
     def generate(self):
@@ -40,11 +46,15 @@ class MainWindow(QMainWindow):
         self.ui.plainTextEdit_result.setPlainText(markdown)
 
     @Slot()
-    def set_access_token(self):
+    def configure_access_token(self):
         dialog = SetAccessToken()
         if dialog.exec():
             token: str = dialog.token
-            if len(token) > 0:
-                self.ui.label_accessTokenValue.setText(token)
-            else:
-                self.ui.label_accessTokenValue.setText("Not set")
+            self.__set_access_token(token)
+
+    def __set_access_token(self, token):
+        self.__config_provider.set_token(token)
+        if len(token) > 0:
+            self.ui.label_accessTokenValue.setText(token)
+        else:
+            self.ui.label_accessTokenValue.setText("Not set")
