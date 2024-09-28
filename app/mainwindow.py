@@ -1,4 +1,5 @@
 import json
+import re
 
 from PySide6.QtCore import Slot
 
@@ -32,18 +33,21 @@ class MainWindow(QMainWindow):
 
         photo_obj = json.loads(photo)
 
-        author = photo_obj["user"]["name"]
-        author_link = photo_obj["user"]["links"]["html"]
-        description = photo_obj["description"]
-        image_url = photo_obj["links"]["html"]
-        image_hotlink = photo_obj["urls"]["regular"]
+        template = self.ui.plainTextEdit_template.toPlainText()
+        list_to_replace: list[str] = re.findall("{[a-zA-Z0-9_.]+}", template)
 
-        markdown = (
-            f"<center>![]({image_hotlink})</center>\n\n<center><sub>{description}. "
-            f"Photo by [{author}]({author_link}) on [Unsplash]({image_url}).</sub></center>\n"
-        )
+        for placeholder in list_to_replace:
+            json_keys = placeholder.removeprefix('{').removesuffix('}').split('.')
+            json_value = photo_obj
+            for key in json_keys:
+                json_value = json_value[key]
 
-        self.ui.plainTextEdit_result.setPlainText(markdown)
+            if json_value is None:
+                json_value = ""
+
+            template = template.replace(placeholder, json_value)
+
+        self.ui.plainTextEdit_result.setPlainText(template)
 
     @Slot()
     def configure_access_token(self):

@@ -65,26 +65,41 @@ class Ui_MainWindow(object):
 
         self.formLayout_2.setWidget(1, QFormLayout.FieldRole, self.lineEdit_url)
 
+        self.label_template = QLabel(self.centralwidget)
+        self.label_template.setObjectName(u"label_template")
+
+        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_template)
+
+        self.dummy_template = QLabel(self.centralwidget)
+        self.dummy_template.setObjectName(u"dummy_template")
+
+        self.formLayout_2.setWidget(2, QFormLayout.FieldRole, self.dummy_template)
+
+        self.plainTextEdit_template = QPlainTextEdit(self.centralwidget)
+        self.plainTextEdit_template.setObjectName(u"plainTextEdit_template")
+
+        self.formLayout_2.setWidget(3, QFormLayout.SpanningRole, self.plainTextEdit_template)
+
         self.pushButton_generate = QPushButton(self.centralwidget)
         self.pushButton_generate.setObjectName(u"pushButton_generate")
 
-        self.formLayout_2.setWidget(2, QFormLayout.SpanningRole, self.pushButton_generate)
+        self.formLayout_2.setWidget(4, QFormLayout.SpanningRole, self.pushButton_generate)
 
         self.label_result = QLabel(self.centralwidget)
         self.label_result.setObjectName(u"label_result")
 
-        self.formLayout_2.setWidget(3, QFormLayout.LabelRole, self.label_result)
+        self.formLayout_2.setWidget(5, QFormLayout.LabelRole, self.label_result)
 
         self.dummy_result = QLabel(self.centralwidget)
         self.dummy_result.setObjectName(u"dummy_result")
 
-        self.formLayout_2.setWidget(3, QFormLayout.FieldRole, self.dummy_result)
+        self.formLayout_2.setWidget(5, QFormLayout.FieldRole, self.dummy_result)
 
         self.plainTextEdit_result = QPlainTextEdit(self.centralwidget)
         self.plainTextEdit_result.setObjectName(u"plainTextEdit_result")
         self.plainTextEdit_result.setReadOnly(False)
 
-        self.formLayout_2.setWidget(4, QFormLayout.SpanningRole, self.plainTextEdit_result)
+        self.formLayout_2.setWidget(6, QFormLayout.SpanningRole, self.plainTextEdit_result)
 
 
         self.gridLayout_2.addLayout(self.formLayout_2, 0, 0, 1, 1)
@@ -103,6 +118,11 @@ class Ui_MainWindow(object):
         self.pushButton_setAccessToken.setText(QCoreApplication.translate("MainWindow", u"Configure", None))
         self.lable_url.setText(QCoreApplication.translate("MainWindow", u"Unsplash URL:", None))
         self.lineEdit_url.setPlaceholderText(QCoreApplication.translate("MainWindow", u"https://unsplash.com/photos/...", None))
+        self.label_template.setText(QCoreApplication.translate("MainWindow", u"Template:", None))
+        self.dummy_template.setText("")
+        self.plainTextEdit_template.setPlainText(QCoreApplication.translate("MainWindow", u"<center>![]({urls.regular})</center>\n"
+"\n"
+"<center><sub>{alt_description}. Photo by [{user.name}]({user.links.html}) on [Unsplash]({links.html}).</sub></center>", None))
         self.pushButton_generate.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
         self.label_result.setText(QCoreApplication.translate("MainWindow", u"Result:", None))
         self.dummy_result.setText("")
