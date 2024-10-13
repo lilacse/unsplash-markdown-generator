@@ -21,6 +21,7 @@ class MainWindow(QMainWindow):
 
         self.__config_provider.init_config()
         self.__set_access_token(self.__config_provider.get_token())
+        self.__set_template(self.__config_provider.get_template())
 
         self.ui.pushButton_generate.clicked.connect(self.generate)
         self.ui.pushButton_setAccessToken.clicked.connect(self.configure_access_token)
@@ -35,6 +36,8 @@ class MainWindow(QMainWindow):
 
         template = self.ui.plainTextEdit_template.toPlainText()
         list_to_replace: list[str] = re.findall("{[a-zA-Z0-9_.]+}", template)
+
+        self.__config_provider.set_template(template)
 
         for placeholder in list_to_replace:
             json_keys = placeholder.removeprefix('{').removesuffix('}').split('.')
@@ -62,3 +65,7 @@ class MainWindow(QMainWindow):
             self.ui.label_accessTokenValue.setText(token)
         else:
             self.ui.label_accessTokenValue.setText("Not set")
+
+    def __set_template(self, template):
+        if len(template) > 0:
+            self.ui.plainTextEdit_template.setPlainText(template)

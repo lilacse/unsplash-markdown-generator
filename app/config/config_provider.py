@@ -23,3 +23,11 @@ class ConfigProvider:
         self.__config.token = new_token
         with open(self.__config_path, "w") as config_file:
             json.dump(self.__config.__dict__, fp=config_file)
+
+    def get_template(self) -> str:
+        return self.__config.template
+
+    def set_template(self, new_template) -> None:
+        self.__config.template = new_template
+        with open(self.__config_path, "w") as config_file:
+            json.dump(self.__config.__dict__, fp=config_file)
