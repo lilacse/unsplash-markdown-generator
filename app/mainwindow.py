@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
 
     @Slot()
     def generate(self):
-        access_token = self.ui.label_accessTokenValue.text()
+        access_token = self.__config_provider.get_token()
         url = self.ui.lineEdit_url.text()
         photo = get_photo(access_token, url)
 
@@ -62,7 +62,7 @@ class MainWindow(QMainWindow):
     def __set_access_token(self, token):
         self.__config_provider.set_token(token)
         if len(token) > 0:
-            self.ui.label_accessTokenValue.setText(token)
+            self.ui.label_accessTokenValue.setText("*******")
         else:
             self.ui.label_accessTokenValue.setText("Not set")
 
